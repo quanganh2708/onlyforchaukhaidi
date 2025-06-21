@@ -133,7 +133,7 @@
     ];
 
     function getRandomMoves() {
-      return Math.floor(Math.random() * 6) + 10;
+      return Math.floor(Math.random() * 6) + 10; // 10-15 lần
     }
 
     function moveButton() {
@@ -155,8 +155,14 @@
     const isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
     if (isMobile) {
-      setInterval(moveButton, 1200);
+      // Mobile: chỉ chạy khi còn lượt
+      setInterval(() => {
+        if (movesLeft > 0) {
+          moveButton();
+        }
+      }, 1200);
     } else {
+      // PC: hover mới chạy
       runBtn.addEventListener('mouseover', moveButton);
     }
 

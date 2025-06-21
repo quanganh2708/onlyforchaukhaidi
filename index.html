@@ -136,19 +136,26 @@
       return Math.floor(Math.random() * 6) + 10; // 10-15 lần
     }
 
-    runBtn.addEventListener('mouseover', () => {
+    function moveButton() {
       if (movesLeft > 0) {
         const x = Math.random() * (window.innerWidth - 150);
         const y = Math.random() * (window.innerHeight - 80);
         runBtn.style.left = `${x}px`;
         runBtn.style.top = `${y}px`;
-
-        const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-        runBtn.textContent = randomMsg;
-
+        runBtn.textContent = messages[Math.floor(Math.random() * messages.length)];
         movesLeft--;
       }
-    });
+    }
+
+    const isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // Điện thoại: tự động nhảy mỗi 1.2 giây
+      setInterval(moveButton, 1200);
+    } else {
+      // Máy tính: hover mới nhảy
+      runBtn.addEventListener('mouseover', moveButton);
+    }
 
     runBtn.addEventListener('click', () => {
       if (movesLeft <= 0) {
